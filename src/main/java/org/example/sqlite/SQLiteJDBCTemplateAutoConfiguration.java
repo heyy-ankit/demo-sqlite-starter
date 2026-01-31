@@ -54,5 +54,14 @@ public class SQLiteJDBCTemplateAutoConfiguration {
             SqliteProperties props) {
         return new SqlitePragmaInitializer(jdbcTemplate, props);
     }
+    
+    @Bean
+    @ConditionalOnProperty(prefix = "sqlite", name = "enabled", havingValue = "true")
+    public SqliteSchemaDataInitializer sqliteSchemaDataInitializer(
+            @Qualifier("sqliteJdbcTemplate") JdbcTemplate jdbcTemplate,
+            @Qualifier("sqliteDataSource") DataSource dataSource,
+            SqliteProperties props) {
+        return new SqliteSchemaDataInitializer(jdbcTemplate, dataSource, props);
+    }
 
 }
